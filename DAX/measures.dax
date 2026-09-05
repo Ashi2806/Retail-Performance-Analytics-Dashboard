@@ -1,0 +1,64 @@
+-- ============================================
+-- SALES ANALYTICS DASHBOARD - DAX MEASURES
+-- ============================================
+
+
+-- Average Discount
+Avg Discount =
+AVERAGE(retail_sales_dataset[discount_pct])
+
+
+-- Average Unit Price
+Avg Unit Price =
+AVERAGE(retail_sales_dataset[unit_price])
+
+
+-- Profit Margin
+Profit Margin =
+DIVIDE(
+    SUM(retail_sales_dataset[profit]),
+    SUM(retail_sales_dataset[sales_amount]),
+    0
+)
+
+
+-- Total Orders
+Total Orders =
+DISTINCTCOUNT(retail_sales_dataset[order_id])
+
+
+-- Total Products
+Total Products =
+DISTINCTCOUNT(retail_sales_dataset[product_name])
+
+
+-- Total Profit
+Total Profit =
+SUM(retail_sales_dataset[profit])
+
+
+-- Total Sales
+Total sales =
+SUM(retail_sales_dataset[sales_amount])
+
+
+-- Total Quantity Sold
+Total Quantity Sold =
+SUM(retail_sales_dataset[quantity])
+
+
+-- Viewing Period
+Viewing Period =
+VAR MinDate =
+    MIN('retail_sales_dataset'[order_date])
+VAR MaxDate =
+    MAX('retail_sales_dataset'[order_date])
+RETURN
+    IF(
+        MinDate = MaxDate,
+        "Analysis Period: " & FORMAT(MinDate, "dd MMM yyyy"),
+        "Analysis Period: "
+            & FORMAT(MinDate, "MMM yyyy")
+            & " – "
+            & FORMAT(MaxDate, "MMM yyyy")
+    )
